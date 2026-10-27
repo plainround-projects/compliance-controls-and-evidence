@@ -137,11 +137,16 @@ tests/
   integration/       the adapters, the grants and the append-only log against PostgreSQL.
   e2e/               the scenario, then a tampered file.
 docker-compose.yml   PostgreSQL 18 (and the API under the `api` profile).   Dockerfile  the API as an image.
+tech/                41 beginner notes, one per technology; start at tech/README.md.
 pyproject.toml       metadata and every tool's configuration.   requirements*.lock  hash-pinned dependencies.
 Makefile             the only commands a reader needs.          .github/workflows  ci.yml and the weekly evidence.yml.
 ```
 
 The dependency rule (domain depends on nothing; application on domain; infrastructure and interfaces on both; nothing on interfaces) is enforced by `make lint` through import-linter, and a second contract forbids `domain` and `application` from importing Flask or psycopg.
+
+## Verification status of the tech/ notes
+
+The notes in `tech/` were checked against the repository: every quoted line comes from a file here, and every command that needs no container was run and its output compared. The commands that start Docker were written while the host had no capacity (load average above 300, swap nearly full), so they were not run. pending capacity: run `make up`, then the container commands in [tech/postgresql.md](tech/postgresql.md), [tech/docker.md](tech/docker.md), [tech/dockerfile.md](tech/dockerfile.md), [tech/docker-compose.md](tech/docker-compose.md), [tech/gunicorn.md](tech/gunicorn.md) and [tech/http-and-rest.md](tech/http-and-rest.md), and compare their output with what each note says, then `make down`.
 
 ## Author and license
 
