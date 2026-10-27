@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set it in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set it in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-notes}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-55440}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+  api:
+    profiles: ["api"]
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://app_rw:${APP_RW_PASSWORD:?set it in .env}@db:5432/${POSTGRES_DB:-notes}
+      NOTES_SECRET: ${NOTES_SECRET:?set it in .env}
+      HTTP_PORT: "8080"
+    ports:
+      - "127.0.0.1:${HTTP_PORT:-8080}:8080"
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
