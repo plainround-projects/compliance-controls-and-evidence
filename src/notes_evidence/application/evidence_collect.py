@@ -200,9 +200,10 @@ def build_index(collector: Collector, catalog: ControlCatalog, framework_markdow
                 f"| {spec.period} | {spec.refreshed} |"
             )
     lines += ["", "## Exceptions", ""]
-    lines += [
-        f"- {item.id} ({item.control}): {item.description} Follow-up: {item.followup.rstrip('.')}." for item in exceptions
-    ] or ["None."]
+    for item in exceptions:
+        lines.append(f"- {item.id} ({item.control}): {item.description} Follow-up: {item.followup.rstrip('.')}.")
+    if not exceptions:
+        lines.append("None.")
     lines += ["", "## Tracked gaps", ""]
     lines += [f"- {gap.control}: {gap.reason} Ticket {gap.ticket}, due {gap.due}." for gap in gaps] or ["None."]
     lines += ["", "## Framework mapping", "", framework_markdown, ""]
