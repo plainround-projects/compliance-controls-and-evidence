@@ -18,5 +18,5 @@ RUN useradd --system --uid 10001 --no-create-home app
 USER app
 
 EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD ["notes-api-health"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", "--graceful-timeout", "20", "notes_evidence.interfaces.wsgi:app"]
+HEALTHCHECK --interval=30s --timeout=20s --start-period=30s --retries=3 CMD ["notes-api-health"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", "--graceful-timeout", "20", "--no-control-socket", "notes_evidence.interfaces.wsgi:app"]
