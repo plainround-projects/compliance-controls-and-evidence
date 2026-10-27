@@ -86,6 +86,42 @@ down: ## stop PostgreSQL and delete its data and the generated state
 `docker compose --profile api down -v` stops and removes the containers and the volume (`-v`). Nothing stays running between
 verifications.
 
+### The complete file `.dockerignore`, line by line
+
+`.dockerignore` lines 1 to 15:
+
+```text
+.git
+.venv
+.env
+state
+build
+evidence
+tests
+fixtures
+**/__pycache__
+.mypy_cache
+.ruff_cache
+.pytest_cache
+.coverage
+.omc
+```
+
+- `.git` is left out of the build folder sent to Docker.
+- `.venv` is left out of the build folder sent to Docker.
+- `.env` is left out of the build folder sent to Docker.
+- `state` is left out of the build folder sent to Docker.
+- `build` is left out of the build folder sent to Docker.
+- `evidence` is left out of the build folder sent to Docker.
+- `tests` is left out of the build folder sent to Docker.
+- `fixtures` is left out of the build folder sent to Docker.
+- `**/__pycache__` is left out of the build folder sent to Docker.
+- `.mypy_cache` is left out of the build folder sent to Docker.
+- `.ruff_cache` is left out of the build folder sent to Docker.
+- `.pytest_cache` is left out of the build folder sent to Docker.
+- `.coverage` is left out of the build folder sent to Docker.
+- `.omc` is left out of the build folder sent to Docker.
+
 ## Try it yourself
 
 Not run while this note was written: the machine was out of capacity, so no container was started. The expected output comes from the repository's own verified runs (the README and `evidence/`).

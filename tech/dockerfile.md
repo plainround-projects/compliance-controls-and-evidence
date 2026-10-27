@@ -97,6 +97,76 @@ CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", 
   is the small Python program in `interfaces/health.py` (see `argparse.md`), so the image needs no `curl`.
 - `CMD [...]` is the start command (see `gunicorn.md`), in exec form.
 
+### The complete file `Dockerfile`, line by line
+
+`Dockerfile` lines 1 to 2:
+
+```dockerfile
+# The notes API as an image: pinned base, hash-pinned dependencies, a non-root user, a health check, graceful shutdown by gunicorn.
+FROM python:3.12.8-slim-bookworm@sha256:2199a62885a12290dc9c5be3ca0681d367576ab7bf037da120e564723292a2f0
+```
+
+> **In plain words.** A Dockerfile is a list of instructions that `docker build` runs in order to make an **image**: a packaged file system plus a start command. Each instruction adds a **layer**, and Docker reuses a layer when nothing it depends on changed, so the order matters.
+
+- `FROM` starts the image from this base image (the `@sha256:` part pins the exact version): `python:3.12.8-slim-bookworm@sha256:2199a62885a12290dc9c5be3ca0681d367576ab7bf037da120e564723292a2f0`.
+
+`Dockerfile` lines 4 to 7:
+
+```dockerfile
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+```
+
+- `ENV` sets environment variables for the build and for the running container: `PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1`. `PYTHONDONTWRITEBYTECODE=1`, `PYTHONUNBUFFERED=1`, `PIP_NO_CACHE_DIR=1`, `PIP_DISABLE_PIP_VERSION_CHECK=1`.
+
+`Dockerfile` lines 9 to 11:
+
+```dockerfile
+WORKDIR /app
+COPY requirements.lock ./
+RUN pip install --require-hashes -r requirements.lock
+```
+
+- `WORKDIR` sets the folder that later instructions run in: `/app`.
+- `COPY` copies files from the build folder into the image: `requirements.lock ./`.
+- `RUN` runs a command while the image is built: `pip install --require-hashes -r requirements.lock`. It runs pip, the package installer, subcommand `install` with `--require-hashes` (refuse any package without a pinned hash), `-r requirements.lock` (read the list from the named file).
+
+`Dockerfile` lines 13 to 15:
+
+```dockerfile
+COPY pyproject.toml README.md ./
+COPY src ./src
+RUN pip install --no-deps .
+```
+
+- `COPY` copies files from the build folder into the image: `pyproject.toml README.md ./`.
+- `COPY` copies files from the build folder into the image: `src ./src`.
+- `RUN` runs a command while the image is built: `pip install --no-deps .`. It runs pip, the package installer, subcommand `install` with `--no-deps` (do not install or resolve dependencies), `.`.
+
+`Dockerfile` lines 17 to 18:
+
+```dockerfile
+RUN useradd --system --uid 10001 --no-create-home app
+USER app
+```
+
+- `RUN` runs a command while the image is built: `useradd --system --uid 10001 --no-create-home app`. It runs useradd, which creates an operating-system user with `--system` (a system account), `--uid 10001` (numeric user id), `--no-create-home` (do not create a home folder), `app`.
+- `USER` makes later instructions and the running container use this user: `app`.
+
+`Dockerfile` lines 20 to 22:
+
+```dockerfile
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=20s --start-period=30s --retries=3 CMD ["notes-api-health"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", "--graceful-timeout", "20", "--no-control-socket", "notes_evidence.interfaces.wsgi:app"]
+```
+
+- `EXPOSE` documents the port the app listens on: `8080`.
+- `HEALTHCHECK` tells Docker how to test that the container works: `--interval=30s --timeout=20s --start-period=30s --retries=3 CMD ["notes-api-health"]`. `--interval` is the time between checks, `--timeout` how long one may take, `--start-period` the grace time after start, `--retries` the failures allowed in a row.
+- `CMD` sets the command that runs when a container starts: `["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", "--graceful-timeout", "20", "--no-control-socket", "notes_evide…`. The JSON list form (exec form) runs the program directly, with no shell in between.
+
 ## Try it yourself
 
 Not run while this note was written: the machine was out of capacity, so no container was started. The expected output comes from the repository's own verified runs (the README and `evidence/`).

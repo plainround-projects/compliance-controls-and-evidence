@@ -118,6 +118,70 @@ def load_settings(env: Mapping[str, str]) -> Settings:
 pass a plain dictionary), checks the secret length and the allowed values of `EVIDENCE_SOURCE` and `LOG_LEVEL`, and converts the numbers
 with `_positive_int`.
 
+### The complete file `.env.example`, line by line
+
+`.env.example` lines 1 to 16:
+
+```ini
+# PostgreSQL superuser and the throwaway passwords of a database that lives only on this machine
+# while the container runs. Change them if you share the machine. Nothing here is a real secret.
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=dev-only-superuser-password
+POSTGRES_DB=notes
+POSTGRES_PORT=55440
+APP_RW_PASSWORD=dev-only-app-password
+MIGRATOR_PASSWORD=dev-only-migrator-password
+RETENTION_PASSWORD=dev-only-retention-password
+# The notes API connects as app_rw (least privilege); the evidence collectors connect as the superuser.
+DATABASE_URL=postgresql://app_rw:dev-only-app-password@localhost:55440/notes
+ADMIN_DATABASE_URL=postgresql://postgres:dev-only-superuser-password@localhost:55440/notes
+# Signs session tokens. Set a long random value anywhere real.
+NOTES_SECRET=dev-only-signing-secret-change-me-before-sharing
+TOKEN_TTL_SECONDS=900
+AUDIT_RETENTION_DAYS=365
+```
+
+> **In plain words.** A `.env` file is a list of `NAME=value` lines that become settings (environment variables) for the programs; a line starting with `#` is a comment.
+
+- `POSTGRES_USER` is set to `postgres`. The author's comment: PostgreSQL superuser and the throwaway passwords of a database that lives only on this machine while the container runs. Change them if you share the machine. Nothing here is a real secret.
+- `POSTGRES_PASSWORD` is set to `dev-only-superuser-password`.
+- `POSTGRES_DB` is set to `notes`.
+- `POSTGRES_PORT` is set to `55440`.
+- `APP_RW_PASSWORD` is set to `dev-only-app-password`.
+- `MIGRATOR_PASSWORD` is set to `dev-only-migrator-password`.
+- `RETENTION_PASSWORD` is set to `dev-only-retention-password`.
+- `DATABASE_URL` is set to `postgresql://app_rw:dev-only-app-password@localhost:55440/notes`. The author's comment: The notes API connects as app_rw (least privilege); the evidence collectors connect as the superuser.
+- `ADMIN_DATABASE_URL` is set to `postgresql://postgres:dev-only-superuser-password@localhost:55440/notes`.
+- `NOTES_SECRET` is set to `dev-only-signing-secret-change-me-before-sharing`. The author's comment: Signs session tokens. Set a long random value anywhere real.
+- `TOKEN_TTL_SECONDS` is set to `900`.
+- `AUDIT_RETENTION_DAYS` is set to `365`.
+
+`.env.example` lines 17 to 28:
+
+```ini
+# A statement running longer than this is cancelled by the database. Generous, so a busy machine does not fail a test.
+DB_STATEMENT_TIMEOUT_MS=30000
+# Where the evidence pack is written and the controls are described.
+EVIDENCE_DIR=evidence
+CONTROLS_FILE=controls/controls.toml
+# fixture reads the made-up repository, deploy and cloud data under fixtures/; live runs gh and aws.
+EVIDENCE_SOURCE=fixture
+# Who runs the collectors, for the "run by" column of the index.
+EVIDENCE_RUN_BY=ada
+STATE_DIR=state
+LOG_LEVEL=INFO
+HTTP_PORT=8080
+```
+
+- `DB_STATEMENT_TIMEOUT_MS` is set to `30000`. The author's comment: A statement running longer than this is cancelled by the database. Generous, so a busy machine does not fail a test.
+- `EVIDENCE_DIR` is set to `evidence`. The author's comment: Where the evidence pack is written and the controls are described.
+- `CONTROLS_FILE` is set to `controls/controls.toml`.
+- `EVIDENCE_SOURCE` is set to `fixture`. The author's comment: fixture reads the made-up repository, deploy and cloud data under fixtures/; live runs gh and aws.
+- `EVIDENCE_RUN_BY` is set to `ada`. The author's comment: Who runs the collectors, for the "run by" column of the index.
+- `STATE_DIR` is set to `state`.
+- `LOG_LEVEL` is set to `INFO`.
+- `HTTP_PORT` is set to `8080`.
+
 ## Try it yourself
 
 ```bash

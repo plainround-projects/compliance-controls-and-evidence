@@ -60,6 +60,78 @@ check. Services reach each other by name on the private network (`db:5432`).
 - `cap_drop: [ALL]`: remove every Linux capability (special privileges) from the process.
 - `security_opt: ["no-new-privileges:true"]`: the process can never gain privileges, for example through a setuid program.
 
+### The complete file `docker-compose.yml`, line by line
+
+`docker-compose.yml` lines 1 to 31:
+
+```yaml
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set it in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set it in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-notes}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-55440}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 10s
+      retries: 60
+      start_period: 30s
+  api:
+    profiles: ["api"]
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://app_rw:${APP_RW_PASSWORD:?set it in .env}@db:5432/${POSTGRES_DB:-notes}
+      NOTES_SECRET: ${NOTES_SECRET:?set it in .env}
+      HTTP_PORT: "8080"
+    ports:
+      - "127.0.0.1:${HTTP_PORT:-8080}:8080"
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+```
+
+> **In plain words.** YAML is a settings format that uses indentation (spaces, never tabs) to show what belongs to what. `key: value` sets a value, `- item` is one entry of a list, `&name` names a block and `*name` reuses it, and `#` starts a comment.
+
+- A setting `services` (the containers) starts a group; the more indented lines below belong to it.
+- A setting `db` starts a group; the more indented lines below belong to it.
+- A setting `image` (the image to run) is `postgres:18`.
+- A setting `environment` (environment variables) starts a group; the more indented lines below belong to it.
+- A setting `POSTGRES_USER` is `${POSTGRES_USER:?set it in .env}`.
+- A setting `POSTGRES_PASSWORD` is `${POSTGRES_PASSWORD:?set it in .env}`.
+- A setting `POSTGRES_DB` is `${POSTGRES_DB:-notes}`.
+- A setting `ports` (ports to publish) starts a group; the more indented lines below belong to it.
+- A list item `"127.0.0.1:${POSTGRES_PORT:-55440}:5432"`.
+- A setting `healthcheck` (how to test that the container is healthy) starts a group; the more indented lines below belong to it.
+- A setting `test` (the health command) is `["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]`.
+- A setting `interval` (time between checks) is `5s`.
+- A setting `timeout` (time allowed for one check) is `10s`.
+- A setting `retries` (failures allowed in a row) is `60`.
+- A setting `start_period` (grace time after start) is `30s`.
+- A setting `api` starts a group; the more indented lines below belong to it.
+- A setting `profiles` (the profiles this service belongs to) is `["api"]`.
+- A setting `build` (build the image from this folder) is `.`.
+- A setting `depends_on` (start after these services) starts a group; the more indented lines below belong to it.
+- A setting `db` starts a group; the more indented lines below belong to it.
+- A setting `condition` (what to wait for) is `service_healthy`.
+- A setting `environment` (environment variables) starts a group; the more indented lines below belong to it.
+- A setting `DATABASE_URL` is `postgresql://app_rw:${APP_RW_PASSWORD:?set it in .env}@db:5432/${POSTGRES_DB:-notes}`.
+- A setting `NOTES_SECRET` is `${NOTES_SECRET:?set it in .env}`.
+- A setting `HTTP_PORT` is `"8080"`.
+- A setting `ports` (ports to publish) starts a group; the more indented lines below belong to it.
+- A list item `"127.0.0.1:${HTTP_PORT:-8080}:8080"`.
+- A setting `read_only` (make the root file system read-only) is `true`.
+- A setting `tmpfs` (in-memory scratch folders) is `["/tmp"]`.
+- A setting `cap_drop` (Linux capabilities to remove) is `[ALL]`.
+- A setting `security_opt` (extra security options) is `["no-new-privileges:true"]`.
+
 ## Try it yourself
 
 Not run while this note was written: the machine was out of capacity, so no container was started. The expected output comes from the repository's own verified runs (the README and `evidence/`).

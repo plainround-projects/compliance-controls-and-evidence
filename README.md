@@ -137,7 +137,7 @@ tests/
   integration/       the adapters, the grants and the append-only log against PostgreSQL.
   e2e/               the scenario, then a tampered file.
 docker-compose.yml   PostgreSQL 18 (and the API under the `api` profile).   Dockerfile  the API as an image.
-tech/                41 beginner notes, one per technology; start at tech/README.md.
+tech/                52 beginner notes, one per technology, with every source file quoted and explained line by line; start at tech/README.md.
 pyproject.toml       metadata and every tool's configuration.   requirements*.lock  hash-pinned dependencies.
 Makefile             the only commands a reader needs.          .github/workflows  ci.yml and the weekly evidence.yml.
 ```

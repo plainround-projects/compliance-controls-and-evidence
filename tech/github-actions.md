@@ -116,6 +116,184 @@ on:
 - The job brings up the database, collects, **verifies** (`make verify`), reports, and uploads `evidence-<run id>` containing the pack
   and `build/report.md`. It runs in fixture mode, so it needs no credentials.
 
+### The complete file `.github/workflows/ci.yml`, line by line
+
+`.github/workflows/ci.yml` lines 1 to 1:
+
+```yaml
+name: ci
+```
+
+> **In plain words.** YAML is a settings format that uses indentation (spaces, never tabs) to show what belongs to what. `key: value` sets a value, `- item` is one entry of a list, `&name` names a block and `*name` reuses it, and `#` starts a comment.
+
+- A setting `name` (a label shown in the interface) is `ci`.
+
+`.github/workflows/ci.yml` lines 3 to 3:
+
+```yaml
+on: [push, pull_request]
+```
+
+- A setting `on` (the events that start the workflow) is `[push, pull_request]`.
+
+`.github/workflows/ci.yml` lines 5 to 21:
+
+```yaml
+jobs:
+  check:
+    name: Format, lint, types, import rules, unit tests with coverage, dependency audit, the scan as a build artifact (C5)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make check
+      - run: make audit
+      - name: C5 evidence — the dependency scan of this build, with this run's id
+        run: make scan EVIDENCE_DIR=build/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scan-report
+          path: build/evidence/C5-scan-report.json
+```
+
+- A setting `jobs` (the jobs to run) starts a group; the more indented lines below belong to it.
+- A setting `check` starts a group; the more indented lines below belong to it.
+- A setting `name` (a label shown in the interface) is `Format, lint, types, import rules, unit tests with coverage, dependency audit, the scan a…`.
+- A setting `runs-on` (the kind of machine) is `ubuntu-latest`.
+- A setting `steps` (the steps of the job, in order) starts a group; the more indented lines below belong to it.
+- `uses` (runs a packaged action): the action `actions/checkout@v4`; the part after `@` is the version tag.
+- `uses` (runs a packaged action): the action `actions/setup-python@v5`; the part after `@` is the version tag.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `python-version` (the Python version to install) is `"3.12"`.
+- `run` (a shell command to run): runs Make with `check`.
+- `run` (a shell command to run): runs Make with `audit`.
+- A list item `name` (a label shown in the interface) is `C5 evidence — the dependency scan of this build, with this run's id`.
+- `run` (a shell command to run): runs Make with `scan`, `EVIDENCE_DIR=build/evidence`.
+- `uses` (runs a packaged action): the action `actions/upload-artifact@v4`; the part after `@` is the version tag.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `name` (a label shown in the interface) is `scan-report`.
+- A setting `path` (the file or folder) is `build/evidence/C5-scan-report.json`.
+
+`.github/workflows/ci.yml` lines 23 to 39:
+
+```yaml
+  integration:
+    name: Integration and end-to-end tests (PostgreSQL 18 from docker-compose.yml)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make up
+      - run: make test-integration test-e2e
+      - name: The evidence pack of this run
+        run: make evidence EVIDENCE_DIR=build/evidence STATE_DIR=build/state
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence
+          path: build/evidence/
+```
+
+- A setting `integration` starts a group; the more indented lines below belong to it.
+- A setting `name` (a label shown in the interface) is `Integration and end-to-end tests (PostgreSQL 18 from docker-compose.yml)`.
+- A setting `runs-on` (the kind of machine) is `ubuntu-latest`.
+- A setting `steps` (the steps of the job, in order) starts a group; the more indented lines below belong to it.
+- `uses` (runs a packaged action): the action `actions/checkout@v4`; the part after `@` is the version tag.
+- `uses` (runs a packaged action): the action `actions/setup-python@v5`; the part after `@` is the version tag.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `python-version` (the Python version to install) is `"3.12"`.
+- `run` (a shell command to run): runs Make with `up`.
+- `run` (a shell command to run): runs Make with `test-integration`, `test-e2e`.
+- A list item `name` (a label shown in the interface) is `The evidence pack of this run`.
+- `run` (a shell command to run): runs Make with `evidence`, `EVIDENCE_DIR=build/evidence`, `STATE_DIR=build/state`.
+- `uses` (runs a packaged action): the action `actions/upload-artifact@v4`; the part after `@` is the version tag.
+- A setting `if` (run only when this is true) is `always()`.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `name` (a label shown in the interface) is `evidence`.
+- A setting `path` (the file or folder) is `build/evidence/`.
+
+### The complete file `.github/workflows/evidence.yml`, line by line
+
+`.github/workflows/evidence.yml` lines 1 to 1:
+
+```yaml
+name: evidence
+```
+
+> **In plain words.** YAML is a settings format that uses indentation (spaces, never tabs) to show what belongs to what. `key: value` sets a value, `- item` is one entry of a list, `&name` names a block and `*name` reuses it, and `#` starts a comment.
+
+- A setting `name` (a label shown in the interface) is `evidence`.
+
+`.github/workflows/evidence.yml` lines 3 to 5:
+
+```yaml
+# The stretch goal: the pack regenerates on a schedule instead of in a rush before the audit. It runs in fixture mode so
+# it needs no credentials. To collect from a real repository and cloud account, set EVIDENCE_SOURCE=live,
+# GITHUB_REPOSITORY and the cloud credentials as repository secrets (least privilege: read-only roles).
+```
+
+- These lines are comments written by the author; they are quoted above.
+
+`.github/workflows/evidence.yml` lines 7 to 10:
+
+```yaml
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+```
+
+- A setting `on` (the events that start the workflow) starts a group; the more indented lines below belong to it.
+- A setting `schedule` (run on a clock) starts a group; the more indented lines below belong to it.
+- A list item `cron` (the time pattern (minute hour day month weekday)) is `"17 5 * * 1"`.
+- A setting `workflow_dispatch` (adds a manual "Run workflow" button) starts a group; the more indented lines below belong to it.
+
+`.github/workflows/evidence.yml` lines 12 to 29:
+
+```yaml
+jobs:
+  weekly-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make up
+      - run: make evidence EVIDENCE_DIR=build/evidence STATE_DIR=build/state
+      - run: make verify EVIDENCE_DIR=build/evidence
+      - run: make report EVIDENCE_DIR=build/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.run_id }}
+          path: |
+            build/evidence/
+            build/report.md
+```
+
+- A setting `jobs` (the jobs to run) starts a group; the more indented lines below belong to it.
+- A setting `weekly-pack` starts a group; the more indented lines below belong to it.
+- A setting `runs-on` (the kind of machine) is `ubuntu-latest`.
+- A setting `steps` (the steps of the job, in order) starts a group; the more indented lines below belong to it.
+- `uses` (runs a packaged action): the action `actions/checkout@v4`; the part after `@` is the version tag.
+- `uses` (runs a packaged action): the action `actions/setup-python@v5`; the part after `@` is the version tag.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `python-version` (the Python version to install) is `"3.12"`.
+- `run` (a shell command to run): runs Make with `up`.
+- `run` (a shell command to run): runs Make with `evidence`, `EVIDENCE_DIR=build/evidence`, `STATE_DIR=build/state`.
+- `run` (a shell command to run): runs Make with `verify`, `EVIDENCE_DIR=build/evidence`.
+- `run` (a shell command to run): runs Make with `report`, `EVIDENCE_DIR=build/evidence`.
+- `uses` (runs a packaged action): the action `actions/upload-artifact@v4`; the part after `@` is the version tag.
+- A setting `with` (inputs for the action) starts a group; the more indented lines below belong to it.
+- A setting `name` (a label shown in the interface) is `evidence-${{ github.run_id }}`.
+- A setting `path` (the file or folder) is `|`.
+- `build/evidence/`.
+- `build/report.md`.
+
 ## Try it yourself
 
 ```bash
