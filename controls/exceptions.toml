@@ -1,0 +1,8 @@
+# Known deviations from a control, each with how it was handled. `verify` fails when a deviation in the evidence is not listed here.
+
+[[exception]]
+id = "EXC-1"
+control = "C2"
+change = 43
+description = "Pull request 43 was a hotfix merged without an approver."
+followup = "SEC-16: a retroactive review by bruno and chen was recorded the next morning."

@@ -1,0 +1,16 @@
+{
+  "Users": [
+    {
+      "UserName": "ada",
+      "UserId": "AIDAEXAMPLE0001",
+      "Arn": "arn:aws:iam::000000000000:user/ada",
+      "CreateDate": "2024-01-15T09:00:00Z"
+    },
+    {
+      "UserName": "contractor-lee",
+      "UserId": "AIDAEXAMPLE0002",
+      "Arn": "arn:aws:iam::000000000000:user/contractor-lee",
+      "CreateDate": "2025-11-03T09:00:00Z"
+    }
+  ]
+}

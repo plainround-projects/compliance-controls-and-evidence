@@ -1,0 +1,7 @@
+# Controls with no evidence yet, tracked on purpose. An untracked missing control fails `verify`; a tracked one is reported.
+
+[[gap]]
+control = "C7"
+reason = "Backups are written unencrypted to the scratch volume; encryption at rest is a storage setting that is planned, not yet enabled."
+ticket = "SEC-21"
+due = 2026-12-01

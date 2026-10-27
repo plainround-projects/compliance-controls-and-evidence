@@ -1,0 +1,66 @@
+# The reviewer's decisions for the quarterly access review. Every principal in the C1 list needs a line.
+
+[review]
+reviewer = "eli"
+reviewed_on = 2026-10-26
+ticket = "SEC-17"
+
+[[decision]]
+system = "repository (permission per person)"
+principal = "ada"
+keep = true
+reason = "Developer and repository admin; needed to merge and release."
+
+[[decision]]
+system = "repository (permission per person)"
+principal = "bruno"
+keep = true
+reason = "Developer; write access is needed to open and merge reviewed changes."
+
+[[decision]]
+system = "repository (permission per person)"
+principal = "chen"
+keep = true
+reason = "Developer; write access is needed to open and merge reviewed changes."
+
+[[decision]]
+system = "repository (permission per person)"
+principal = "dana"
+keep = true
+reason = "Operations engineer; read access is enough to follow deployments."
+
+[[decision]]
+system = "database roles"
+principal = "app_rw"
+keep = true
+reason = "The API's own role: reads users, writes notes, appends to the audit log, nothing else."
+
+[[decision]]
+system = "database roles"
+principal = "audit_retention"
+keep = true
+reason = "The retention job's role: it may delete audit rows only after the retention period."
+
+[[decision]]
+system = "database roles"
+principal = "migrator"
+keep = true
+reason = "Applies schema changes and creates scratch databases for the restore test."
+
+[[decision]]
+system = "database roles"
+principal = "postgres"
+keep = true
+reason = "The administrative role the collectors use; only the operations engineer holds its password."
+
+[[decision]]
+system = "cloud account users"
+principal = "ada"
+keep = true
+reason = "Developer who deploys."
+
+[[decision]]
+system = "cloud account users"
+principal = "contractor-lee"
+keep = false
+reason = "Contractor who left on 2026-09-18; the account was never closed."

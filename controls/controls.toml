@@ -1,0 +1,116 @@
+# The control matrix for notes-api: six controls with the evidence that proves each, the framework references each
+# answers to (ISO/IEC 27001:2022 Annex A and the SOC 2 trust services criteria), and one control that is a tracked gap.
+# `controls-evidence verify` checks that every control maps to evidence, every file exists and says what it should.
+
+[[control]]
+id = "C1"
+name = "Access control"
+requires = "only needed people have access, at the least level"
+where = "repository, database, cloud account"
+iso27001 = ["A.5.15", "A.5.18", "A.8.2"]
+soc2 = ["CC6.1", "CC6.3"]
+
+  [[control.evidence]]
+  file = "C1-access-list.txt"
+  kind = "access_list"
+  proves = "who can do what today, in each system"
+  period = "point in time"
+  refresh_days = 7
+  refreshed = "weekly"
+
+[[control]]
+id = "C2"
+name = "Change management"
+requires = "every change is reviewed and traceable to what was deployed"
+where = "repository, CI"
+iso27001 = ["A.8.32"]
+soc2 = ["CC8.1"]
+
+  [[control.evidence]]
+  file = "C2-changes.csv"
+  kind = "changes"
+  proves = "reviewed, traceable changes, from approval to deployment"
+  period = "sample of recent merges"
+  refresh_days = 7
+  refreshed = "weekly"
+
+[[control]]
+id = "C3"
+name = "Logging and monitoring"
+requires = "actions are logged and a person is told about important events"
+where = "audit log, alert"
+iso27001 = ["A.8.15", "A.8.16"]
+soc2 = ["CC7.2"]
+
+  [[control.evidence]]
+  file = "C3-log-sample.txt"
+  kind = "log_sample"
+  proves = "who did what and when, without note content"
+  period = "sample"
+  refresh_days = 7
+  refreshed = "weekly"
+
+  [[control.evidence]]
+  file = "C3-alert-test.txt"
+  kind = "alert_test"
+  proves = "the alert fires on a test event, with its timestamp beside the action"
+  period = "point in time"
+  refresh_days = 30
+  refreshed = "monthly"
+
+[[control]]
+id = "C4"
+name = "Backup and recovery"
+requires = "data can be restored, and the time it takes is known"
+where = "database"
+iso27001 = ["A.8.13"]
+soc2 = ["A1.2", "A1.3"]
+
+  [[control.evidence]]
+  file = "C4-restore-test.txt"
+  kind = "restore"
+  proves = "a real restore into a scratch database, verified by row count, with its duration"
+  period = "point in time"
+  refresh_days = 30
+  refreshed = "monthly"
+
+[[control]]
+id = "C5"
+name = "Vulnerability management"
+requires = "known weaknesses in dependencies are found and handled"
+where = "CI"
+iso27001 = ["A.8.8"]
+soc2 = ["CC7.1"]
+
+  [[control.evidence]]
+  file = "C5-scan-report.json"
+  kind = "scan"
+  proves = "the dependency scan of a build, with its run id and the blocking rule"
+  period = "every build"
+  refresh_days = 7
+  refreshed = "every build"
+
+[[control]]
+id = "C6"
+name = "Access review"
+requires = "access is checked regularly and removed when no longer needed"
+where = "people"
+iso27001 = ["A.5.18", "A.8.2"]
+soc2 = ["CC6.2", "CC6.3"]
+
+  [[control.evidence]]
+  file = "C6-access-review.md"
+  kind = "review"
+  proves = "a reviewer decided every access; the removed access is gone on a re-run"
+  period = "quarterly point in time"
+  refresh_days = 95
+  refreshed = "quarterly"
+
+# A control that fails on purpose: it has no evidence, and the gap is tracked in gaps.toml.
+[[control]]
+id = "C7"
+name = "Backup encryption"
+requires = "backups are encrypted at rest"
+where = "backup storage"
+iso27001 = ["A.8.24"]
+soc2 = ["CC6.1"]

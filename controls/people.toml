@@ -1,0 +1,26 @@
+# Who may hold access. All names are made up. A person with left_on set must not keep any access (ARV003).
+
+[[person]]
+name = "ada"
+title = "Developer"
+
+[[person]]
+name = "bruno"
+title = "Developer"
+
+[[person]]
+name = "chen"
+title = "Developer"
+
+[[person]]
+name = "dana"
+title = "Operations engineer"
+
+[[person]]
+name = "eli"
+title = "Manager"
+
+[[person]]
+name = "contractor-lee"
+title = "Contractor"
+left_on = 2026-09-18

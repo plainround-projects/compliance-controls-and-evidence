@@ -1,0 +1,127 @@
+[
+  {
+    "number": 38,
+    "title": "Change 38",
+    "author": {
+      "login": "bruno"
+    },
+    "mergedAt": "2026-10-14T10:15:04Z",
+    "mergeCommit": {
+      "oid": "39f5f753633ed25f14992533aa82e522c3311423"
+    },
+    "reviews": [
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "ada"
+        }
+      }
+    ]
+  },
+  {
+    "number": 39,
+    "title": "Change 39",
+    "author": {
+      "login": "chen"
+    },
+    "mergedAt": "2026-10-15T13:02:40Z",
+    "mergeCommit": {
+      "oid": "cc6f44b600adb5ab05454c6409de00372f2f0ded"
+    },
+    "reviews": [
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "ada"
+        }
+      },
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "bruno"
+        }
+      },
+      {
+        "state": "COMMENTED",
+        "author": {
+          "login": "dana"
+        }
+      }
+    ]
+  },
+  {
+    "number": 40,
+    "title": "Change 40",
+    "author": {
+      "login": "ada"
+    },
+    "mergedAt": "2026-10-19T08:47:19Z",
+    "mergeCommit": {
+      "oid": "ea0ceff350be44dbfc34239ecc31856edf793359"
+    },
+    "reviews": [
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "bruno"
+        }
+      }
+    ]
+  },
+  {
+    "number": 41,
+    "title": "Change 41",
+    "author": {
+      "login": "bruno"
+    },
+    "mergedAt": "2026-10-20T14:02:11Z",
+    "mergeCommit": {
+      "oid": "129e5860e3daab65a1ddb4f6783c4bb8cdbcddaa"
+    },
+    "reviews": [
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "ada"
+        }
+      }
+    ]
+  },
+  {
+    "number": 42,
+    "title": "Change 42",
+    "author": {
+      "login": "chen"
+    },
+    "mergedAt": "2026-10-21T09:40:55Z",
+    "mergeCommit": {
+      "oid": "4259cf148fc5f4f6b1a7dc37067a3e62048ceaf6"
+    },
+    "reviews": [
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "ada"
+        }
+      },
+      {
+        "state": "APPROVED",
+        "author": {
+          "login": "bruno"
+        }
+      }
+    ]
+  },
+  {
+    "number": 43,
+    "title": "Change 43",
+    "author": {
+      "login": "ada"
+    },
+    "mergedAt": "2026-10-21T16:20:01Z",
+    "mergeCommit": {
+      "oid": "79e029c299979083586f21142af7e6b854b00cf7"
+    },
+    "reviews": []
+  }
+]
