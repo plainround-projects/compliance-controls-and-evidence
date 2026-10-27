@@ -29,7 +29,7 @@ env:
 	@[ -f .env ] || { cp .env.example .env; echo "created .env from .env.example"; }
 
 up: env $(STAMP) ## start PostgreSQL and apply sql/001_schema.sql and sql/002_seed.sql
-	docker compose up -d --wait db
+	docker compose up -d --wait --wait-timeout 900 db
 	$(MAKE) --no-print-directory db
 
 db: ## apply the schema (roles, tables, append-only audit log, grants) and the seed
