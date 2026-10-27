@@ -1,0 +1,29 @@
+name: evidence
+
+# The stretch goal: the pack regenerates on a schedule instead of in a rush before the audit. It runs in fixture mode so
+# it needs no credentials. To collect from a real repository and cloud account, set EVIDENCE_SOURCE=live,
+# GITHUB_REPOSITORY and the cloud credentials as repository secrets (least privilege: read-only roles).
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+jobs:
+  weekly-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make up
+      - run: make evidence EVIDENCE_DIR=build/evidence STATE_DIR=build/state
+      - run: make verify EVIDENCE_DIR=build/evidence
+      - run: make report EVIDENCE_DIR=build/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.run_id }}
+          path: |
+            build/evidence/
+            build/report.md

@@ -1,0 +1,39 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    name: Format, lint, types, import rules, unit tests with coverage, dependency audit, the scan as a build artifact (C5)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make check
+      - run: make audit
+      - name: C5 evidence — the dependency scan of this build, with this run's id
+        run: make scan EVIDENCE_DIR=build/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scan-report
+          path: build/evidence/C5-scan-report.json
+
+  integration:
+    name: Integration and end-to-end tests (PostgreSQL 18 from docker-compose.yml)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make up
+      - run: make test-integration test-e2e
+      - name: The evidence pack of this run
+        run: make evidence EVIDENCE_DIR=build/evidence STATE_DIR=build/state
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence
+          path: build/evidence/
