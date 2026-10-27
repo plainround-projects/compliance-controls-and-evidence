@@ -88,6 +88,8 @@ def test_settings_defaults():
         "fixture",
         8080,
     )
+    assert settings.statement_timeout_ms == 30_000
+    assert load_settings({**ENV, "DB_STATEMENT_TIMEOUT_MS": "1000"}).statement_timeout_ms == 1000
     assert settings.db_exec_prefix == ("docker", "compose", "exec", "-T", "db")
 
 
@@ -101,6 +103,7 @@ def test_settings_defaults():
         {**ENV, "LOG_LEVEL": "LOUD"},
         {**ENV, "TOKEN_TTL_SECONDS": "soon"},
         {**ENV, "HTTP_PORT": "0"},
+        {**ENV, "DB_STATEMENT_TIMEOUT_MS": "never"},
     ],
 )
 def test_bad_settings_are_rejected(env):

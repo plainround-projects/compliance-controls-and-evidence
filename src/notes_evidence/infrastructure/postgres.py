@@ -18,7 +18,7 @@ from notes_evidence.domain.notes import Note, User
 from notes_evidence.domain.roles import Role
 
 CONNECT_ATTEMPTS = 5
-STATEMENT_TIMEOUT_MS = 5000
+DEFAULT_STATEMENT_TIMEOUT_MS = 30_000
 
 
 class Database:
@@ -28,8 +28,14 @@ class Database:
     answer for threaded servers, and gunicorn's synchronous workers need only this.
     """
 
-    def __init__(self, url: str, sleep: Callable[[float], None] = time.sleep) -> None:
+    def __init__(
+        self,
+        url: str,
+        sleep: Callable[[float], None] = time.sleep,
+        statement_timeout_ms: int = DEFAULT_STATEMENT_TIMEOUT_MS,
+    ) -> None:
         self._url = url
+        self._statement_timeout_ms = statement_timeout_ms
         self._sleep = sleep
         self._connection: psycopg.Connection[tuple[Any, ...]] | None = None
         self._lock = threading.RLock()
@@ -61,7 +67,7 @@ class Database:
         for attempt in range(1, CONNECT_ATTEMPTS + 1):
             try:
                 self._connection = psycopg.connect(
-                    self._url, connect_timeout=5, options=f"-c statement_timeout={STATEMENT_TIMEOUT_MS}"
+                    self._url, connect_timeout=5, options=f"-c statement_timeout={self._statement_timeout_ms}"
                 )
                 return self._connection
             except psycopg.OperationalError:

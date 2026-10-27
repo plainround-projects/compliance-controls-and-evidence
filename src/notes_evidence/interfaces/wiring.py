@@ -50,7 +50,7 @@ class Runtime:
 def build_runtime(settings: Settings) -> Runtime:
     """The notes service wired to PostgreSQL as the least-privileged `app_rw` role."""
     clock, hasher = SystemClock(), ScryptHasher()
-    database = Database(settings.database_url)
+    database = Database(settings.database_url, statement_timeout_ms=settings.statement_timeout_ms)
     users, audit = PostgresUsers(database), PostgresAuditLog(database)
     tokens = HmacTokens(settings.secret, timedelta(seconds=settings.token_ttl_seconds))
     service = NotesService(users, PostgresNotes(database), audit, hasher, tokens, clock)
@@ -59,7 +59,9 @@ def build_runtime(settings: Settings) -> Runtime:
 
 def admin_database(settings: Settings) -> Database:
     """The administrative connection, used by the collectors and the provisioner."""
-    return Database(settings.admin_database_url or settings.database_url)
+    return Database(
+        settings.admin_database_url or settings.database_url, statement_timeout_ms=settings.statement_timeout_ms
+    )
 
 
 def provisioner(settings: Settings) -> PostgresProvisioner:

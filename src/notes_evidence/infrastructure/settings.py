@@ -20,6 +20,7 @@ class Settings:
     secret: str
     token_ttl_seconds: int
     retention_days: int
+    statement_timeout_ms: int
     evidence_dir: Path
     controls_file: Path
     evidence_source: str
@@ -67,6 +68,7 @@ def load_settings(env: Mapping[str, str]) -> Settings:
         secret=secret,
         token_ttl_seconds=_positive_int(env, "TOKEN_TTL_SECONDS", 900),
         retention_days=_positive_int(env, "AUDIT_RETENTION_DAYS", 365),
+        statement_timeout_ms=_positive_int(env, "DB_STATEMENT_TIMEOUT_MS", 30_000),
         evidence_dir=Path(env.get("EVIDENCE_DIR", "evidence")),
         controls_file=Path(env.get("CONTROLS_FILE", "controls/controls.toml")),
         evidence_source=source,
