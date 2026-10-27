@@ -1,0 +1,4 @@
+restore started 2026-10-27T01:34:29Z from backup 2026-10-27T01:34:10Z
+restore finished 2026-10-27T01:36:59Z (2 min 29 s)
+check: notes table has 12,402 rows; source had 12,402 rows at backup time
+result: verified

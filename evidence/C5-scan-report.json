@@ -1,0 +1,11 @@
+{
+  "run_id": "local-20261027T013659Z",
+  "tool": "pip-audit",
+  "tool_version": "2.10.1",
+  "scanned_at": "2026-10-27T01:36:59Z",
+  "target": "requirements.lock",
+  "packages_scanned": 10,
+  "blocking_rule": "any known vulnerability with a fixed version available fails the build",
+  "verdict": "pass",
+  "findings": []
+}

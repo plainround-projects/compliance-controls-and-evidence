@@ -1,0 +1,7 @@
+"number","author","merged_at","commit","approvers","deploy_id"
+38,"bruno","2026-10-14T10:15:04Z","39f5f75","ada","deploy-2026-10-14-38"
+39,"chen","2026-10-15T13:02:40Z","cc6f44b","ada+bruno","deploy-2026-10-15-39"
+40,"ada","2026-10-19T08:47:19Z","ea0ceff","bruno","deploy-2026-10-19-40"
+41,"bruno","2026-10-20T14:02:11Z","129e586","ada","deploy-2026-10-20-41"
+42,"chen","2026-10-21T09:40:55Z","4259cf1","ada+bruno","deploy-2026-10-21-42"
+43,"ada","2026-10-21T16:20:01Z","79e029c","","deploy-2026-10-21-43"

@@ -1,0 +1,13 @@
+# access list, generated 2026-10-27T01:37:07Z
+## repository (permission per person)
+ada	admin
+bruno	write
+chen	write
+dana	read
+## database roles
+app_rw	standard
+audit_retention	standard
+migrator	createdb
+postgres	superuser
+## cloud account users
+ada

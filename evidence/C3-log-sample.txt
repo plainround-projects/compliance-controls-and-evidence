@@ -1,0 +1,20 @@
+2026-10-27T01:33:52Z user=ada id=1 action=login_ok note=- outcome=ok
+2026-10-27T01:33:55Z user=bruno id=2 action=login_ok note=- outcome=ok
+2026-10-27T01:33:56Z user=chen id=3 action=login_ok note=- outcome=ok
+2026-10-27T01:33:58Z user=dana id=4 action=login_ok note=- outcome=ok
+2026-10-27T01:33:59Z user=bruno id=2 action=note_created note=12401 outcome=ok
+2026-10-27T01:34:00Z user=chen id=3 action=note_created note=12402 outcome=ok
+2026-10-27T01:34:00Z user=bruno id=2 action=note_created note=12403 outcome=ok
+2026-10-27T01:34:00Z user=bruno id=2 action=note_read note=12401 outcome=ok
+2026-10-27T01:34:02Z user=bruno id=2 action=note_updated note=12401 outcome=ok
+2026-10-27T01:34:02Z user=dana id=4 action=note_read note=12402 outcome=ok
+2026-10-27T01:34:03Z user=bruno id=2 action=access_denied note=12402 outcome=denied
+2026-10-27T01:34:03Z user=dana id=4 action=access_denied note=- outcome=denied
+2026-10-27T01:34:04Z user=chen id=3 action=note_deleted note=12402 outcome=ok
+2026-10-27T01:34:05Z user=bruno id=2 action=login_failed note=- outcome=failed
+2026-10-27T01:34:06Z user=bruno id=2 action=login_failed note=- outcome=failed
+2026-10-27T01:34:06Z user=bruno id=2 action=login_failed note=- outcome=failed
+2026-10-27T01:34:07Z user=bruno id=2 action=login_failed note=- outcome=failed
+2026-10-27T01:34:08Z user=bruno id=2 action=login_failed note=- outcome=failed
+2026-10-27T01:34:08Z user=ada id=1 action=role_granted note=- outcome=ok role=admin target=chen
+2026-10-27T01:34:08Z user=ada id=1 action=role_granted note=- outcome=ok role=member target=chen

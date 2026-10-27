@@ -1,0 +1,5 @@
+alert test: 5 wrong passwords for account bruno, then an admin role grant
+test action at 2026-10-27T01:34:04Z
+2 alert(s) delivered:
+ALERT [failed-logins] 2026-10-27T01:34:08Z 5 failed logins for account bruno within 2 minutes
+ALERT [admin-granted] 2026-10-27T01:34:08Z admin role granted to chen by ada

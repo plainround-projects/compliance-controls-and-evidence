@@ -1,0 +1,58 @@
+{
+  "C1-access-list.txt": {
+    "control": "C1",
+    "produced_at": "2026-10-27T01:37:07Z",
+    "run_by": "ada",
+    "sha256": "ba099eb7874505e0ef36f1988b63bab3a7df1baf0f48b497054929427bb9b84e",
+    "source": "fixture"
+  },
+  "C2-changes.csv": {
+    "control": "C2",
+    "produced_at": "2026-10-27T01:34:10Z",
+    "run_by": "ada",
+    "sha256": "ed934bcb7d6c4ba69813180eb3998ee290065f60aae20a34758b25e67257703e",
+    "source": "fixture"
+  },
+  "C3-alert-test.txt": {
+    "control": "C3",
+    "produced_at": "2026-10-27T01:34:09Z",
+    "run_by": "ada",
+    "sha256": "5fbef16135e9ba5ec2c9c22ea13eef94b540e7a145b8df17ca5db06948d483b3",
+    "source": "fixture"
+  },
+  "C3-log-sample.txt": {
+    "control": "C3",
+    "produced_at": "2026-10-27T01:34:09Z",
+    "run_by": "ada",
+    "sha256": "ca33296f7dbb12ae37faae5fa4b85f7b685bb00422ccb7b39a6b7d8903c81f34",
+    "source": "fixture"
+  },
+  "C4-restore-test.txt": {
+    "control": "C4",
+    "produced_at": "2026-10-27T01:36:59Z",
+    "run_by": "ada",
+    "sha256": "24e2471d3585d27a2f66b03b068695bb58bd173b0238d1f39915311c6453a35b",
+    "source": "fixture"
+  },
+  "C5-scan-report.json": {
+    "control": "C5",
+    "produced_at": "2026-10-27T01:36:59Z",
+    "run_by": "ada",
+    "sha256": "2fdb0ec7d6d654ec08c57d8ac1875df05407e22f5ac6a7d756ddf5256fce3340",
+    "source": "fixture"
+  },
+  "C6-access-review.md": {
+    "control": "C6",
+    "produced_at": "2026-10-27T01:37:07Z",
+    "run_by": "ada",
+    "sha256": "c96ddc85444c98a347a205100650981b7d9de39aebd1bd9c64e226cd1463e94a",
+    "source": "fixture"
+  },
+  "INDEX.md": {
+    "control": "-",
+    "produced_at": "2026-10-27T01:37:07Z",
+    "run_by": "ada",
+    "sha256": "41ff13d1122bc552281eba28f8ff140990cfc650f9c5010cf6834311040565e0",
+    "source": "fixture"
+  }
+}
