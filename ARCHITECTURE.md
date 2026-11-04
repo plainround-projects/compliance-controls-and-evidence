@@ -31,7 +31,7 @@ flowchart LR
         logs["Log stream and alert<br/>C3"]
         bak["Database backup<br/>C4"]
     end
-    pack["Evidence pack<br/>INDEX.md, manifest.json, nine files"]
+    pack["Evidence pack<br/>seven evidence files,<br/>INDEX.md, manifest.json"]
     iam -->|"access-list, access-review"| pack
     repo -->|"changes.csv, scan-report"| pack
     logs -->|"log-sample, alert-test"| pack
