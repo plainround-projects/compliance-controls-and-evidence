@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730" role="img" aria-labelledby="t d">
+<title id="t">Six controls, one evidence pack</title>
+<desc id="d">Inside the notes-api system, four groups feed the evidence pack. Access and reviews write the access list and the access review, for controls C1 and C6. Repository and CI write the changes and the dependency scan report, for C2 and C5. The log stream and alert write the log sample and the alert test, for C3. The database backup writes the restore test, for C4. The evidence pack holds seven evidence files, INDEX.md and manifest.json. The auditor runs verify against the pack, and the matrix controls.toml with its exceptions and gaps says what must exist. A warning note shows that a file edited by hand fails the check with EVD003.</desc>
+<style>
+:root{--paper:#ffffff;--ink:#10243d;--mute:#52677f;--accent:#0a6aa8;--good:#19743f;--warn:#8a5a00}
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;fill:var(--ink)}
+.title{font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-size:36px}
+.caption{font-size:16px;fill:var(--mute)}
+.name{font-size:20px;font-weight:600}
+.lane{font-size:17px;font-weight:600}
+.sub{font-size:15px;fill:var(--mute)}
+.label{font-size:15px}
+.tag{font-size:15px;fill:var(--mute)}
+.num{font-size:15px;font-weight:700;fill:var(--paper)}
+.legend{font-size:14px;fill:var(--mute)}
+.t-accent{fill:var(--accent)}
+.t-good{fill:var(--good)}
+.t-warn{fill:var(--warn)}
+.t-ink{fill:var(--ink)}
+.b{font-weight:600}
+.paper{fill:var(--paper);stroke:var(--mute);stroke-opacity:.3}
+.grid{fill:url(#grid)}
+.boundary{fill:var(--mute);fill-opacity:.035;stroke:var(--mute);stroke-opacity:.7;stroke-dasharray:6 5}
+.svc{fill:var(--accent);fill-opacity:.08;stroke:var(--accent);stroke-width:1.25}
+.store{fill:var(--mute);fill-opacity:.1;stroke:var(--mute);stroke-width:1.25}
+.rim{fill:none;stroke:var(--mute);stroke-width:1.25}
+.actor{fill:none;stroke:var(--mute);stroke-width:1.25}
+.slot{fill:var(--accent);fill-opacity:.14;stroke:var(--accent);stroke-width:1}
+.note{fill:var(--warn);fill-opacity:.09;stroke:var(--warn);stroke-width:1}
+.win{fill:var(--good);fill-opacity:.09;stroke:var(--good);stroke-width:1}
+.hair{fill:none;stroke:var(--mute);stroke-opacity:.4;stroke-width:1}
+.zone{fill:var(--accent);fill-opacity:.045;stroke:var(--accent);stroke-width:1.25;stroke-dasharray:6 5}
+.stop{fill:none;stroke:var(--warn);stroke-width:4;stroke-linecap:round}
+.mask{fill:var(--paper)}
+.sync,.async,.read,.fail,.ok{fill:none}
+.sync{stroke:var(--accent);stroke-width:1.75;marker-end:url(#a-sync)}
+.async{stroke:var(--accent);stroke-width:1.75;stroke-dasharray:8 6;marker-end:url(#a-async)}
+.read{stroke:var(--mute);stroke-width:1.75;stroke-linecap:round;stroke-dasharray:1 6;marker-end:url(#a-read)}
+.fail{stroke:var(--warn);stroke-width:2;marker-end:url(#a-fail)}
+.ok{stroke:var(--good);stroke-width:1.75;marker-end:url(#a-ok)}
+.dot{fill:var(--accent)}
+.dot-w{fill:var(--warn)}
+.dot-g{fill:var(--good)}
+.head-sync,.head-async{stroke:var(--accent)}
+.head-sync{fill:var(--accent)}
+.head-async,.head-read{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.head-read{stroke:var(--mute)}
+.head-fail{fill:var(--warn)}
+.head-ok{fill:var(--good)}
+.gridline{fill:none;stroke:var(--mute);stroke-opacity:.09}
+</style>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path class="gridline" d="M40 0H0V40"/></pattern>
+<marker id="a-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-sync" d="M0 0L10 5L0 10z"/></marker>
+<marker id="a-async" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-async" d="M1 1L9 5L1 9"/></marker>
+<marker id="a-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-read" d="M1 1L9 5L1 9"/></marker>
+<marker id="a-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-fail" d="M0 0L10 5L0 10z"/></marker>
+<marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-ok" d="M0 0L10 5L0 10z"/></marker>
+</defs>
+<rect class="paper" x="0.5" y="0.5" width="1199" height="729" rx="16"/>
+<rect class="grid" x="1" y="1" width="1198" height="728" rx="16"/>
+<text class="title" x="48" y="68">Six controls, one evidence pack</text>
+<text class="caption" x="48" y="100">Each control has one artifact with one writer and one checker. Amber: a hand edit breaks the hash.</text>
+<rect class="boundary" x="48" y="132" width="472" height="484" rx="14"/>
+<text class="tag" x="64" y="160">The notes-api system</text>
+<rect class="svc" x="72" y="184" width="420" height="84" rx="12"/>
+<text class="name" x="88" y="216">Access and reviews</text>
+<text class="sub" x="88" y="240">C1 access list, C6 access review</text>
+<text class="sub" x="88" y="262">writes access-list, access-review</text>
+<rect class="svc" x="72" y="292" width="420" height="84" rx="12"/>
+<text class="name" x="88" y="324">Repository and CI</text>
+<text class="sub" x="88" y="348">C2 changes, C5 dependency scan</text>
+<text class="sub" x="88" y="370">writes changes, scan-report</text>
+<rect class="svc" x="72" y="400" width="420" height="84" rx="12"/>
+<text class="name" x="88" y="432">Log stream and alert</text>
+<text class="sub" x="88" y="456">C3 log sample, alert test</text>
+<text class="sub" x="88" y="478">writes log-sample, alert-test</text>
+<rect class="svc" x="72" y="508" width="420" height="84" rx="12"/>
+<text class="name" x="88" y="540">Database backup</text>
+<text class="sub" x="88" y="564">C4 restore into a scratch DB</text>
+<text class="sub" x="88" y="586">writes restore-test</text>
+<path class="store" d="M616 196a128 12 0 0 1 256 0v380a128 12 0 0 1 -256 0z"/>
+<path class="rim" d="M616 196a128 12 0 0 0 256 0"/>
+<text class="name" x="744" y="240" text-anchor="middle">Evidence pack</text>
+<text class="sub" x="744" y="262" text-anchor="middle">7 evidence files,</text>
+<text class="sub" x="744" y="284" text-anchor="middle">INDEX.md, manifest.json</text>
+<rect class="actor" x="984" y="226" width="168" height="72" rx="36"/>
+<text class="name" x="1068" y="258" text-anchor="middle">Auditor</text>
+<text class="sub" x="1068" y="280" text-anchor="middle">says show me</text>
+<path class="store" d="M960 392a96 12 0 0 1 192 0v76a96 12 0 0 1 -192 0z"/>
+<path class="rim" d="M960 392a96 12 0 0 0 192 0"/>
+<text class="name" x="1056" y="424" text-anchor="middle">controls.toml</text>
+<text class="sub" x="1056" y="446" text-anchor="middle">exceptions, gaps</text>
+<rect class="note" x="932" y="540" width="220" height="120" rx="10"/>
+<text class="label b t-warn" x="948" y="570">make verify</text>
+<text class="sub" x="948" y="596">a file edited by hand</text>
+<text class="sub" x="948" y="618">fails: EVD003, the</text>
+<text class="sub" x="948" y="640">hash no longer fits</text>
+<path class="sync" d="M492 226H616"/>
+<path class="sync" d="M492 334H616"/>
+<path class="sync" d="M492 442H616"/>
+<path class="sync" d="M492 550H616"/>
+<path class="sync" d="M984 262H872"/>
+<text class="label t-accent" x="900" y="252">verify</text>
+<path class="read" d="M960 440H872"/>
+<text class="label" x="880" y="430">required</text>
+<path class="fail" d="M932 560H872"/>
+<path class="stop" d="M900 548V572"/>
+<path class="sync" d="M48 686H112"/><text class="legend" x="124" y="691">sync call</text>
+<path class="read" d="M520 686H584"/><text class="legend" x="596" y="691">read</text>
+<path class="fail" d="M696 686H760"/><text class="legend" x="772" y="691">failure path</text>
+</svg>

@@ -11,6 +11,24 @@ A small notes API and the evidence that six common security controls are in plac
 
 All names are made up (ada, bruno, chen, dana, eli, contractor-lee; `example` accounts and ids).
 
+## Architecture
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/architecture-dark.svg">
+  <img alt="Four groups in the notes-api system, access and reviews, repository and CI, the log stream and alert, and the database backup, each write their artifacts into one evidence pack of seven evidence files, INDEX.md and manifest.json, which the auditor checks with verify against the control matrix." src="docs/diagrams/architecture.svg">
+</picture>
+
+Notice that every control has one artifact with one writer and one checker, and that the manifest hash is what makes a hand edit a failure.
+
+## How one run flows
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/flow-dark.svg">
+  <img alt="One make run resets the database, exercises the service, collects the six controls, removes the leaver in the access review, builds the index and verifies the pack." src="docs/diagrams/flow.svg">
+</picture>
+
+The run ends with verify passing on nine files; the amber row shows a file edited by hand failing with EVD003 because its hash no longer fits.
+
 ## Prerequisites
 
 | Tool | Version | Used for |
